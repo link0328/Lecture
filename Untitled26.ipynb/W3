@@ -1,0 +1,124 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMYNkygqEanqQUN95arRcO2",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/link0328/Lecture2023/blob/main/Untitled26.ipynb/W3\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ZpDveaIfR1JX",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "03bef8f2-7f65-405b-b6eb-6c85312fe541"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "x의 평균값:  5.0 \n",
+            "\n",
+            "y의 평균값: 90.5 \n",
+            "\n",
+            "\n",
+            "분모 :  20.0 \n",
+            "\n",
+            "분자 :  46.0 \n",
+            "\n",
+            "\n",
+            "기울기 a =  2.3 \n",
+            "\n",
+            "y 절편 b =  79.0 \n",
+            "\n",
+            "\n",
+            "공부시간 = 2 실제점수 = [81 93 91 97] 예측점수 =  83 \n",
+            "\n",
+            "공부시간 = 4 실제점수 = [81 93 91 97] 예측점수 =  88 \n",
+            "\n",
+            "공부시간 = 6 실제점수 = [81 93 91 97] 예측점수 =  92 \n",
+            "\n",
+            "공부시간 = 8 실제점수 = [81 93 91 97] 예측점수 =  97 \n",
+            "\n",
+            "평균 제곱 오차 :  7.5\n"
+          ]
+        }
+      ],
+      "source": [
+        "import numpy as np\n",
+        "\n",
+        "#X로 넘파이배열 생성\n",
+        "x = np.array([2,4,6,8])\n",
+        "#y로 넘파이 배열 생성\n",
+        "y = np.array([81,93,91,97])\n",
+        "\n",
+        "#X의 평균\n",
+        "mx = np.mean(x)\n",
+        "print('x의 평균값: ',mx,'\\n')\n",
+        "\n",
+        "#y의 평균\n",
+        "my = np.mean(y)\n",
+        "print('y의 평균값:',my,'\\n\\n')\n",
+        "\n",
+        "#분모\n",
+        "divisor = sum([(i-mx)**2 for i in x])\n",
+        "print('분모 : ',divisor,'\\n')\n",
+        "\n",
+        "#분자\n",
+        "dividend = sum([(x[i]-mx)*(y[i]-my) for i in range(len(x))])\n",
+        "print('분자 : ',dividend,'\\n\\n')\n",
+        "\n",
+        "\n",
+        "#a, b 구하기\n",
+        "a = dividend / divisor\n",
+        "b = my - (mx*a)\n",
+        "\n",
+        "print('기울기 a = ',a,'\\n')\n",
+        "print('y 절편 b = ',b,'\\n\\n')\n",
+        "\n",
+        "# y_pred 구하는 함수 정의\n",
+        "def predict(x):\n",
+        "    y_pred = a * x + b\n",
+        "    return y_pred\n",
+        "\n",
+        "predict_result=[]\n",
+        "# 각 x 값에 대한 예측값 출력\n",
+        "for x_value in x:\n",
+        "    y_pred = int(predict(x_value))\n",
+        "    print('공부시간 =',x_value,'실제점수 =',y,'예측점수 = ',y_pred,'\\n')\n",
+        "    predict_result.append(y_pred)\n",
+        "\n",
+        "#print(predict_result)\n",
+        "mse = 0\n",
+        "for i in range (len(x)):\n",
+        "  mse += (predict_result[i]-y[i])**2\n",
+        "\n",
+        "print('평균 제곱 오차 : ',mse/(len(x)))"
+      ]
+    }
+  ]
+}
